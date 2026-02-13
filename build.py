@@ -22,7 +22,8 @@ def get_platform():
 def build_application():
     """PyInstaller를 사용한 애플리케이션 빌드"""
     
-    project_dir = "/Users/michael/Workspace/naver-image-crawler"
+    # 프로젝트 디렉토리를 스크립트 위치 기반으로 계산 (하드코딩 대신 사용)
+    project_dir = os.path.dirname(os.path.abspath(__file__))
     assets_dir = os.path.join(project_dir, "assets")
     gui_file = os.path.join(project_dir, "gui.py")
     
@@ -35,7 +36,7 @@ def build_application():
         icon_file = os.path.join(assets_dir, "icon.png")
     
     print("=" * 60)
-    print("네이버 이미지 크롤러 - 애플리케이션 빌드")
+    print("구글 이미지 크롤러 - 애플리케이션 빌드")
     print("=" * 60)
     print(f"플랫폼: {get_platform()}")
     print(f"프로젝트: {project_dir}")
@@ -50,7 +51,7 @@ def build_application():
         "--add-data", f"assets:assets",       # 아이콘 포함
         "--add-data", f"downloads:downloads", # 다운로드 폴더 포함
         f"--icon={icon_file}",               # 아이콘 설정
-        "--name=NaverImageCrawler",          # 애플리케이션 이름
+        "--name=GoogleImageCrawler",          # 애플리케이션 이름
         gui_file
     ]
     
@@ -58,7 +59,7 @@ def build_application():
     if sys.platform == "darwin":
         # macOS에서는 .app 번들 생성 (onefile은 제외)
         cmd.extend([
-            "--osx-bundle-identifier=com.naver.imagecrawler"  # macOS Bundle ID
+            "--osx-bundle-identifier=com.google.imagecrawler"  # macOS Bundle ID
         ])
     else:
         # 다른 OS에서는 onefile 옵션 사용
@@ -93,11 +94,11 @@ def build_application():
         # 실행 명령 제시
         print(f"\n🚀 실행 방법:")
         if sys.platform == "darwin":
-            print(f"  open dist/NaverImageCrawler.app")
+            print(f"  open dist/GoogleImageCrawler.app")
         elif sys.platform == "win32":
-            print(f"  dist\\NaverImageCrawler.exe")
+            print(f"  dist\\GoogleImageCrawler.exe")
         else:
-            print(f"  ./dist/NaverImageCrawler")
+            print(f"  ./dist/GoogleImageCrawler")
         
         return True
     
@@ -113,7 +114,7 @@ def build_application():
 
 def cleanup_build_files():
     """빌드 중간 파일 정리"""
-    project_dir = "/Users/michael/Workspace/naver-image-crawler"
+    project_dir = os.path.dirname(os.path.abspath(__file__))
     
     cleanup_items = [
         os.path.join(project_dir, "build"),
@@ -143,8 +144,9 @@ def cleanup_build_files():
 def main():
     """메인 함수"""
     
-    # 아이콘 확인
-    assets_dir = "/Users/michael/Workspace/naver-image-crawler/assets"
+    # 아이콘 확인 (스크립트 위치 기반)
+    project_dir = os.path.dirname(os.path.abspath(__file__))
+    assets_dir = os.path.join(project_dir, "assets")
     if not os.path.exists(assets_dir):
         print("❌ assets 폴더가 없습니다.")
         print("먼저 create_icon.py를 실행하세요:")

@@ -1,5 +1,5 @@
 """
-네이버 이미지 크롤러 - 아이콘 생성 스크립트
+구글 이미지 크롤러 - 아이콘 생성 스크립트
 """
 
 from PIL import Image, ImageDraw, ImageFont
@@ -13,8 +13,8 @@ def create_icon(size=256):
     Args:
         size (int): 아이콘 크기 (pixels)
     """
-    # 배경색: 네이버 그린
-    bg_color = (0, 150, 76)  # Naver Green
+    # 배경색: Google Blue
+    bg_color = (66, 133, 244)  # Google Blue
     text_color = (255, 255, 255)  # White
     accent_color = (255, 195, 0)  # Gold
     
@@ -105,7 +105,7 @@ def create_icon(size=256):
 def create_all_sizes():
     """다양한 크기의 아이콘 생성"""
     
-    base_dir = "/Users/michael/Workspace/naver-image-crawler"
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     assets_dir = os.path.join(base_dir, "assets")
     os.makedirs(assets_dir, exist_ok=True)
     

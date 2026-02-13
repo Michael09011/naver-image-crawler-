@@ -1,9 +1,9 @@
 """
-네이버 이미지 크롤러 - 고급 예제
+구글 이미지 크롤러 - 고급 예제
 다양한 기능을 보여주는 예제 파일
 """
 
-from crawler import NaverImageCrawler
+from crawler import GoogleImageCrawler
 import os
 
 
@@ -11,7 +11,7 @@ def example_1_basic_crawl():
     """예제 1: 기본 크롤링"""
     print("\n=== 예제 1: 기본 크롤링 ===")
     
-    crawler = NaverImageCrawler(headless=False)
+    crawler = GoogleImageCrawler(headless=False)
     
     try:
         crawler.crawl_images(
@@ -30,7 +30,7 @@ def example_2_multiple_keywords():
     keywords = ["강아지", "고양이", "새"]
     
     for keyword in keywords:
-        crawler = NaverImageCrawler(headless=True)  # headless 모드로 빠르게 실행
+        crawler = GoogleImageCrawler(headless=True)  # headless 모드로 빠르게 실행
         
         try:
             crawler.crawl_images(
@@ -46,7 +46,7 @@ def example_3_headless_mode():
     """예제 3: Headless 모드 (빠른 크롤링)"""
     print("\n=== 예제 3: Headless 모드 ===")
     
-    crawler = NaverImageCrawler(headless=True)
+    crawler = GoogleImageCrawler(headless=True)
     
     try:
         crawler.crawl_images(

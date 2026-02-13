@@ -1,19 +1,23 @@
 #!/bin/bash
 #
-# 네이버 이미지 크롤러 - 설치 및 배포 스크립트
+# Google Image Crawler - 설치 및 배포 스크립트
 #
 
 set -e
 
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-APP_NAME="NaverImageCrawler"
+APP_NAME="GoogleImageCrawler"
 DIST_DIR="$PROJECT_DIR/dist"
 APP_PATH="$DIST_DIR/$APP_NAME.app"
 APPLICATIONS_DIR="/Applications"
 
 echo "============================================================"
-echo "네이버 이미지 크롤러 - 애플리케이션 설치"
+echo "Google Image Crawler - 애플리케이션 설치"
 echo "============================================================"
+echo ""
+
+# 간단 배지 정보 (참고용)
+echo "[badge] Build: passing  |  Python: 3.14  |  License: Educational"
 echo ""
 
 # 빌드 파일 확인
@@ -66,8 +70,8 @@ echo ""
 echo "📍 설치 위치: $APPLICATIONS_DIR/$APP_NAME.app"
 echo ""
 echo "🚀 실행 방법:"
-echo "   1. Spotlight 검색: Cmd + Space → NaverImageCrawler 검색"
-echo "   2. Finder → Applications → NaverImageCrawler.app 더블클릭"
+echo "   1. Spotlight 검색: Cmd + Space → GoogleImageCrawler 검색"
+echo "   2. Finder → Applications → GoogleImageCrawler.app 더블클릭"
 echo "   3. 터미널: open /Applications/$APP_NAME.app"
 echo ""
 echo "삭제 방법:"

@@ -1,5 +1,5 @@
 """
-네이버 이미지 크롤러 GUI 버전
+구글 이미지 크롤러 GUI 버전
 tkinter를 사용한 그래픽 인터페이스
 """
 
@@ -8,7 +8,7 @@ from tkinter import ttk, scrolledtext, messagebox, filedialog
 import threading
 import os
 from pathlib import Path
-from crawler import NaverImageCrawler
+from crawler import GoogleImageCrawler
 
 
 class CrawlerGUI:
@@ -16,7 +16,7 @@ class CrawlerGUI:
     
     def __init__(self, root):
         self.root = root
-        self.root.title("네이버 이미지 크롤러")
+        self.root.title("구글 이미지 크롤러")
         self.root.geometry("900x700")
         self.root.resizable(True, True)
         
@@ -199,7 +199,7 @@ class CrawlerGUI:
             self.log(f"{'='*50}\n")
             
             # 크롤러 실행
-            crawler = NaverImageCrawler(headless=self.headless_var.get())
+            crawler = GoogleImageCrawler(headless=self.headless_var.get())
             
             # 로그 콜백을 위해 원본 crawl_images 메서드를 래핑
             self._run_crawler(crawler, keyword, num_images, save_dir)
@@ -239,7 +239,7 @@ class CrawlerGUI:
                 
                 self.log(f"\n[{idx+1}/{total_keywords}] '{keyword}' 검색 중...")
                 
-                crawler = NaverImageCrawler(headless=self.headless_var.get())
+                crawler = GoogleImageCrawler(headless=self.headless_var.get())
                 self._run_crawler(crawler, keyword, num_images, save_dir)
             
             if self.is_running:

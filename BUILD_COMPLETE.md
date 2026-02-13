@@ -1,4 +1,4 @@
-# 🎉 네이버 이미지 크롤러 - 빌드 완료!
+# 🎉 구글 이미지 크롤러 - 빌드 완료!
 
 ## ✅ 완성된 기능
 
@@ -57,8 +57,8 @@
 - `assets/favicon.ico` - 웹 파비콘
 
 ### 빌드 결과
-- `dist/NaverImageCrawler.app/` - **macOS 실행 가능 앱 (48MB)** ⭐
-- `dist/NaverImageCrawler/` - 디렉토리 형식 버전
+- `dist/GoogleImageCrawler.app/` - **macOS 실행 가능 앱 (48MB)** ⭐
+- `dist/GoogleImageCrawler/` - 디렉토리 형식 버전
 
 ## 🚀 빠른 시작 가이드
 
@@ -66,10 +66,10 @@
 
 ```bash
 # 빌드된 앱 실행
-open dist/NaverImageCrawler.app
+open dist/GoogleImageCrawler.app
 
 # 또는 클릭으로 실행
-# dist/NaverImageCrawler.app 더블클릭
+# dist/GoogleImageCrawler.app 더블클릭
 ```
 
 ### 방법 2️⃣ : Applications 폴더에 설치
@@ -79,10 +79,10 @@ open dist/NaverImageCrawler.app
 bash install.sh
 
 # 또는 수동 설치
-cp -r dist/NaverImageCrawler.app /Applications/
+cp -r dist/GoogleImageCrawler.app /Applications/
 
 # Spotlight에서 실행
-# Cmd + Space → NaverImageCrawler 입력 → Enter
+# Cmd + Space → GoogleImageCrawler 입력 → Enter
 ```
 
 ### 방법 3️⃣ : Python 스크립트로 실행
@@ -106,7 +106,7 @@ python3 crawler.py
 
 ### 1. GUI로 단일 키워드 검색
 ```
-1. NaverImageCrawler.app 실행
+1. GoogleImageCrawler.app 실행
 2. 키워드 입력: "고양이"
 3. 다운로드 개수: 50
 4. "단일 검색" 클릭
@@ -141,10 +141,10 @@ downloads/
 
 ```bash
 # 빌드 중간 파일 제거
-rm -rf build/ NaverImageCrawler.spec
+rm -rf build/ GoogleImageCrawler.spec
 
 # 소스 코드 제거 (앱만 남길 경우)
-# dist/NaverImageCrawler.app만 필요함
+# dist/GoogleImageCrawler.app만 필요함
 ```
 
 ## 🛠️ 커스터마이징
@@ -155,7 +155,7 @@ rm -rf build/ NaverImageCrawler.spec
 3. `python3 build.py`로 다시 빌드
 
 ### 앱 이름 변경
-1. `build.py`의 `--name=NaverImageCrawler` 수정
+1. `build.py`의 `--name=GoogleImageCrawler` 수정
 2. `python3 build.py` 실행
 
 ### 더 작은 빌드
@@ -174,7 +174,7 @@ rm -rf build/ NaverImageCrawler.spec
 ### "앱이 손상되었습니다" 오류 (macOS)
 ```bash
 # 다음 명령 실행
-xattr -rd com.apple.quarantine /Applications/NaverImageCrawler.app
+xattr -rd com.apple.quarantine /Applications/GoogleImageCrawler.app
 ```
 
 ### ChromeDriver 버전 불일치

@@ -14,8 +14,8 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
 
-class NaverImageCrawler:
-    """네이버 이미지 크롤러 클래스"""
+class GoogleImageCrawler:
+    """Google 이미지 크롤러 클래스"""
     
     def __init__(self, headless=False):
         """
@@ -62,9 +62,11 @@ class NaverImageCrawler:
             start (int): 시작 이미지 번호
         
         Returns:
-            str: 네이버 이미지 검색 URL
+            str: Google 이미지 검색 URL
         """
-        return f"https://search.naver.com/search.naver?where=image&sm=tab_jum&query={keyword}&start={start}"
+        # Google 이미지 검색 URL로 변경
+        # start는 이미지 오프셋(예: 0, 20, 40...)으로 동작합니다.
+        return f"https://www.google.com/search?tbm=isch&q={keyword}&start={start}"
     
     def scroll_and_load_images(self, num_scrolls=10):
         """
@@ -73,39 +75,22 @@ class NaverImageCrawler:
         Args:
             num_scrolls (int): 스크롤 횟수
         """
+        # Google 이미지는 스크롤로 더 많은 섬네일을 로드합니다.
         for i in range(num_scrolls):
             # 페이지 끝까지 스크롤
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(0.5)
-            
-            # 더보기 버튼 클릭 시도
+            time.sleep(1.0)
+
+            # 가끔 'Show more results' 버튼이 존재할 수 있으므로 클릭 시도
             try:
-                # 여러 가능한 더보기 버튼 선택자
-                button_selectors = [
-                    "a.api_more_btn",
-                    "button.more_btn",
-                    ".btn_more",
-                    "a.moreBtn"
-                ]
-                
-                button_found = False
-                for selector in button_selectors:
+                more_btns = self.driver.find_elements(By.CSS_SELECTOR, ".mye4qd")
+                if more_btns:
                     try:
-                        buttons = self.driver.find_elements(By.CSS_SELECTOR, selector)
-                        if buttons:
-                            self.driver.execute_script("arguments[0].click();", buttons[0])
-                            button_found = True
-                            time.sleep(0.5)
-                            break
-                    except:
-                        continue
-                
-                if not button_found and i == 0:
-                    # 첫 시도에서 버튼을 못 찾으면 계속 진행
-                    pass
-                    
-            except Exception as e:
-                # 더보기 버튼이 없으면 계속
+                        self.driver.execute_script("arguments[0].click();", more_btns[0])
+                        time.sleep(1.0)
+                    except Exception:
+                        pass
+            except Exception:
                 pass
             
             time.sleep(0.5)
@@ -120,14 +105,12 @@ class NaverImageCrawler:
         image_urls = []
         
         try:
-            # 다양한 선택자로 이미지 요소 찾기
+            # Google 이미지에서 사용되는 대표적인 섬네일 선택자
             selectors = [
-                "img.lazyimg",
-                "img.image",
-                "img._image",
-                "a.thumb img",
-                "div.thumb img",
-                "img[alt]"
+                "img.rg_i",
+                "img.Q4LuWd",
+                "div.isv-r img",
+                "img"
             ]
             
             images = []
@@ -142,20 +125,30 @@ class NaverImageCrawler:
             
             for img in images:
                 try:
-                    # 여러 속성에서 URL 찾기
-                    src = img.get_attribute("src") or img.get_attribute("data-src")
-                    
-                    # 부모 요소에서도 찾기
+                    # 여러 속성에서 URL 찾기 (썸네일은 base64일 수 있으므로 http인지 확인)
+                    src = (
+                        img.get_attribute("src")
+                        or img.get_attribute("data-src")
+                        or img.get_attribute("data-iurl")
+                        or img.get_attribute("data-srcset")
+                    )
+
+                    # 일부 경우 부모 링크에 실제 이미지 URL이 포함될 수 있음
                     if not src:
-                        parent = img.find_element(By.XPATH, "./ancestor::a[@href]")
-                        href = parent.get_attribute("href")
-                        if href and "imgurl=" in href:
-                            src = href
-                    
+                        try:
+                            parent = img.find_element(By.XPATH, "./ancestor::a[@href]")
+                            href = parent.get_attribute("href")
+                            if href and "imgurl=" in href:
+                                # 쿼리에서 실제 이미지 URL 추출
+                                parsed = href.split("imgurl=")[-1]
+                                src = parsed.split("&")[0]
+                        except Exception:
+                            pass
+
                     if src and "http" in src and src not in seen_urls:
                         image_urls.append(src)
                         seen_urls.add(src)
-                except Exception as e:
+                except Exception:
                     continue
         
         except Exception as e:
@@ -303,7 +296,7 @@ class NaverImageCrawler:
 def main():
     """메인 함수"""
     # 크롤러 초기화 (headless=True로 설정하면 브라우저 창이 뜨지 않음)
-    crawler = NaverImageCrawler(headless=False)
+    crawler = GoogleImageCrawler(headless=False)
     
     try:
         # 크롤링 실행
