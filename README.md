@@ -1,4 +1,4 @@
-# 네이버 이미지 크롤러
+# 네이버 이미지 크롤러 (MAC OS)
 <img width="1012" height="840" alt="스크린샷 2026-02-13 오후 2 37 51" src="https://github.com/user-attachments/assets/eaff0769-bd33-48e9-bc89-237095dcad28" />
 
 
